@@ -1,6 +1,6 @@
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { MetricsTable } from "@/components/metrics-table";
+import { ReferenceTabs } from "@/components/reference-tabs";
 import { fetchMetricsFromGitHub, getLastUpdated } from "@/lib/fetch-metrics";
 
 export const revalidate = 3600; // Revalidate every hour
@@ -62,8 +62,8 @@ export default async function HomePage() {
             )}
           </div>
 
-          {/* Metrics Table */}
-          <MetricsTable metrics={metrics} />
+          {/* Reference Tabs */}
+          <ReferenceTabs metrics={metrics} />
         </div>
       </main>
 

@@ -9,7 +9,8 @@ export type MetricCategory =
   | "search"
   | "loyalty"
   | "error"
-  | "experiment";
+  | "experiment"
+  | "mobile";
 
 export interface Metric {
   name: string;
@@ -524,6 +525,98 @@ export const metrics: Metric[] = [
     description: "Track any custom event with arbitrary properties.",
     parameters: "eventName: string, properties?: object",
   },
+
+  // Core Events (additional)
+  {
+    name: "screen_view",
+    method: "screenView(screenName, options)",
+    category: "navigation",
+    description: "Track screen views in mobile apps. Equivalent of page_view for native screens.",
+    parameters: "screenName: string, screenClass?: string",
+  },
+  {
+    name: "loyalty_login",
+    method: "loyaltyLogin(loyaltyId, options)",
+    category: "loyalty",
+    description: "Track when a user links or logs into a loyalty program account.",
+    parameters: "loyaltyId: string, provider?: string, tier?: string",
+  },
+  {
+    name: "store_select",
+    method: "storeSelect(store)",
+    category: "store",
+    description: "Track store selection from a list or map view, before confirming the store.",
+    parameters: "id, name, distance?, source?",
+  },
+
+  // React Native / Mobile Events
+  {
+    name: "app_foreground",
+    method: "automatic",
+    category: "mobile",
+    description: "Automatically tracked when the app enters the foreground from background.",
+  },
+  {
+    name: "app_background",
+    method: "automatic",
+    category: "mobile",
+    description: "Automatically tracked when the app moves to the background.",
+  },
+  {
+    name: "network_change",
+    method: "automatic",
+    category: "mobile",
+    description: "Automatically tracked when network connectivity changes (e.g., wifi to cellular).",
+    parameters: "connectionType: string, isConnected: boolean",
+  },
+  {
+    name: "deep_link",
+    method: "automatic",
+    category: "mobile",
+    description: "Tracked when the app is opened via a deep link or universal link.",
+    parameters: "url: string, source?: string",
+  },
+  {
+    name: "push_received",
+    method: "pushReceived(payload)",
+    category: "mobile",
+    description: "Track when a push notification is received by the device.",
+    parameters: "campaignId?: string, title?: string",
+  },
+  {
+    name: "push_opened",
+    method: "pushOpened(payload)",
+    category: "mobile",
+    description: "Track when a user taps on a push notification to open the app.",
+    parameters: "campaignId?: string, title?: string, action?: string",
+  },
+  {
+    name: "screen_load_time",
+    method: "screenLoadTime(screenName, duration)",
+    category: "mobile",
+    description: "Track screen rendering performance for native screens.",
+    parameters: "screenName: string, duration: number, isInitial?: boolean",
+  },
+  {
+    name: "api_latency",
+    method: "apiLatency(endpoint, duration)",
+    category: "mobile",
+    description: "Track API call latency for performance monitoring.",
+    parameters: "endpoint: string, duration: number, statusCode: number",
+  },
+  {
+    name: "app_install",
+    method: "automatic",
+    category: "mobile",
+    description: "Tracked on first app launch after installation. Captures install referrer if available.",
+  },
+  {
+    name: "app_update",
+    method: "automatic",
+    category: "mobile",
+    description: "Tracked on first launch after an app version update.",
+    parameters: "previousVersion: string, currentVersion: string",
+  },
 ];
 
 export const categoryLabels: Record<MetricCategory, string> = {
@@ -538,6 +631,7 @@ export const categoryLabels: Record<MetricCategory, string> = {
   loyalty: "Loyalty & Promos",
   error: "Error",
   experiment: "Experiments",
+  mobile: "Mobile",
 };
 
 export const categoryColors: Record<MetricCategory, string> = {
@@ -552,4 +646,5 @@ export const categoryColors: Record<MetricCategory, string> = {
   loyalty: "bg-orange-500/10 text-orange-400 border-orange-500/20",
   error: "bg-red-500/10 text-red-400 border-red-500/20",
   experiment: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
+  mobile: "bg-rose-500/10 text-rose-400 border-rose-500/20",
 };
